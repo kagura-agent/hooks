@@ -83,7 +83,7 @@ function formatStrategyForPin(md: string): string {
       continue;
     }
     if (inSection && line.startsWith("- ")) {
-      parts.push(`• ${line.replace(/^- \*\*/, "**").replace(/\*\*$/, "**")}`);
+      parts.push(`• ${line.replace(/^- /, "").trim()}`);
     }
   }
 
