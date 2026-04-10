@@ -7,21 +7,25 @@ const BOT_TOKEN = process.env.DISCORD_BOT_TOKEN || "";
 const PROXY = process.env.https_proxy || process.env.HTTPS_PROXY || "";
 const CHANNEL = "1491602968741413039"; // #kagura-dm
 
-// File → Pin mapping
+// File → Pin mapping — initialize lastMtime from disk to survive gateway restarts
+function initMtime(path: string): number {
+  try { return fs.statSync(path).mtimeMs; } catch { return 0; }
+}
+
 const SYNCS = [
   {
     name: "TODO",
     file: `${WORKSPACE}/TODO.md`,
     pin: "1491651533492850769",
     format: formatTodoForPin,
-    lastMtime: 0,
+    lastMtime: initMtime(`${WORKSPACE}/TODO.md`),
   },
   {
     name: "Strategy",
     file: `${WORKSPACE}/wiki/strategy.md`,
     pin: "1491658212816982066",
     format: formatStrategyForPin,
-    lastMtime: 0,
+    lastMtime: initMtime(`${WORKSPACE}/wiki/strategy.md`),
   },
 ];
 
